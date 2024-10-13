@@ -1,0 +1,67 @@
+# README
+
+## DRTP File Transfer Application
+
+This application is a file transfer program that uses a custom protocol called DRTP (Datagram Reliable Transfer Protocol).
+The application can be operated as a client or a server and uses a sliding window protocol for reliable packet transmission.
+
+## Pre-requisites
+
+Make sure you have Python installed in your system (Python 3.6 or newer is recommended).
+
+## Running the Application
+
+The application can be run as either a server or a client.
+
+### Server mode
+
+To run the application in server mode, use the following command:
+
+```
+python application.py -s --ip [server-ip] -p [port-number] -d [sequence-number]
+```
+
+Where:
+- `-s` or `--server` indicates that the application should run in server mode.
+- `-i` or `--ip` is used to specify the IP address of the server.
+- `-p` or `--port` is used to specify the port number that the server should listen on.
+- `-d` or `--discard` (optional) is used to specify the sequence number of a packet that the server should discard. If not specified, no packets will be discarded.
+
+### Client mode
+
+To run the application in client mode, use the following command:
+
+```
+python application.py -c -i [server-ip] -p [port-number] -f [filename] -w [window-size]
+```
+
+Where:
+- `-c` or `--client` indicates that the application should run in client mode.
+- `-i` or `--ip` is used to specify the IP address of the server.
+- `-p` or `--port` is used to specify the port number that the client should send data to.
+- `-f` or `--file` is used to specify the name of the file that should be sent.
+- `-w` `--window` (optional) is used to specify the size of the sliding window. If not specified, the default size is 3.
+
+## Running Tests to Generate Data
+
+You can run tests to generate data by following these steps:
+
+1. Start the server with a specified sequence number to discard:
+
+    python application.py -s --ip localhost --port 1234 --discard 5
+
+
+2. In a separate terminal, run the client and specify a file to send:
+
+    python application.py -c --ip localhost --port 1234 --file test.txt
+
+
+3. The server will receive the file and store it with the name 'received_file'.
+You can compare this file to the original file to verify that the transfer was successful.
+
+4. The server will also print out the throughput of the file transfer in Mbps and the sequence numbers of the packets received.
+
+5. The client will print out the sequence numbers of the packets sent and acknowledged.
+
+This will generate data regarding the throughput of the file transfer and the reliability of the packet transmission,
+which can be used for further analysis.
